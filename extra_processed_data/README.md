@@ -1,0 +1,1 @@
+Folder for extra processed data. The Streamlit app points to this folder as the place where the events data it uses is housed. 

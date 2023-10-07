@@ -1,8 +1,9 @@
 # Project files
 draft_files/
-img/
-processed_data/
-extra_processed_data/
+img/*
+processed_data/*
+extra_processed_data/*
+!README.md
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
