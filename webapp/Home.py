@@ -18,7 +18,7 @@ st.markdown(
     Everything is created through event data and tracking data, but check you have what you're after with tracking data 
     'video clips'. 
     
-    Spend less time staring at video. Keep the square eyes away with **RoundEyes**.
+    Spend less time staring at video. Keep the square eyes away with _**RoundEyes**_.
     """
 )
 
