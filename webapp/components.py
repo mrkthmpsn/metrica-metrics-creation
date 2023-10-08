@@ -1,6 +1,7 @@
 """
 Test file for Streamlit webapp components
 """
+import itertools
 
 import numpy as np
 from streamlit_extras import row
@@ -91,6 +92,12 @@ def build_up_metric_component(
             st.write(
                 "'Avenue' features (e.g. wing play, long ball). Bit of a v1.1 concept."
             )
+            avenue_option_checks = st.multiselect(
+                label="Avenue options",
+                options=["suffered_pressure_wave"],
+                key=f"avenue_options_{idx}",
+                help="'suffered_pressure_wave' = three consecutive carries comes under pressure",
+            )
 
             st.write("Outputs")
             output_options = [
@@ -98,6 +105,8 @@ def build_up_metric_component(
                 "reached_opp_half",
                 "reached_final_third",
                 "contained_shot",
+                "ended_own_third",
+                "ended_own_half",
             ]
             output_option_checks = st.multiselect(
                 label="Output options",
@@ -177,6 +186,12 @@ def build_up_metric_component(
                 reached_final_third=pd.NamedAgg(
                     "start_x", aggfunc=lambda x: len([1 for i in x if i >= 0.67]) >= 1
                 ),
+                ended_own_third=pd.NamedAgg(
+                    "end_x", aggfunc=lambda x: 1 if x.iloc[-1] <= 0.33 else 0
+                ),
+                ended_own_half=pd.NamedAgg(
+                    "end_x", aggfunc=lambda x: 1 if x.iloc[-1] <= 0.5 else 0
+                ),
                 contained_shot=pd.NamedAgg(
                     "type_id", aggfunc=lambda x: len([1 for i in x if i == 2]) >= 1
                 ),
@@ -186,6 +201,30 @@ def build_up_metric_component(
                     aggfunc=lambda x: [i for i in x if not np.isnan(i)][0]
                     if len([i for i in x if not np.isnan(i)]) > 0
                     else None,
+                ),
+                suffered_pressure_wave=pd.NamedAgg(
+                    "carry_avg_pressure",
+                    # This is a very rough, makeshift metric
+                    # aggfunc=lambda x: 1 if len([i for i in x if not np.isnan(i) and i > 0.75]) > 2 else 0
+                    # This is a very complicated set of logic that should be separated out into a function (and could
+                    # still be improved on from there)
+                    aggfunc=lambda x: 1
+                    if len(
+                        [
+                            i
+                            for i in [
+                                sum(1 for _ in group)
+                                for is_larger, group in itertools.groupby(
+                                    [carry for carry in x if not np.isnan(carry)],
+                                    lambda value: value >= 0.5,
+                                )
+                                if is_larger
+                            ]
+                            if i >= 2
+                        ]
+                    )
+                    > 0
+                    else 0,
                 ),
             )
             .reset_index()
@@ -263,6 +302,7 @@ def build_up_metric_component(
             .agg(
                 dict(
                     **{"sequence_id": "count"},
+                    **{avenue: "sum" for avenue in avenue_option_checks},
                     **{output: "sum" for output in output_option_checks},
                 )
             )
@@ -275,6 +315,7 @@ def build_up_metric_component(
                 "period",
                 "start_time",
                 "end_time",
+                *avenue_option_checks,
                 *output_option_checks,
             ]
         ]
