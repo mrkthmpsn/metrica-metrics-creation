@@ -18,9 +18,15 @@ However, I ended up with more of my own code than I'd originally envisioned, par
 - This was my first project using kloppy and my first in a few years using Metrica's event data - I found it difficult to know what features were Metrica's and what features were kloppy. This was particularly important when features appeared to be missing, which I think came from the Metrica data not having all of the features that kloppy has in its power to add.
 - Metrica's event data JSON was quite simple so writing my own basic parser wasn't too difficult.
 
+## Processing/metric choices
+_To write_
+
+## Output
+_To write_
+
 ## Running the project yourself
 _To write_
-_Note that other than the raw data, no further data will be added to the repo itself as this would add a lot of files. It would also being superfluous, as the data can be generated from the functions._
+_Note that one step of the processed data is missing from the repo as I only added the files I needed to run the app - which, it turns out, is most of them, but still. The processed data can be created through the repo anyway._
 
 ## Links section
 - https://kloppy.pysport.org/getting-started/metrica/
