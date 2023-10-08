@@ -62,14 +62,14 @@ def load_metrica_epts_player_team_id(metadata_file_path: str) -> Dict[int, str]:
 
 
 def load_metrica_epts_tracking_with_kloppy(
-    tracking_file_path: str,
+    raw_tracking_data_file_path: str,
     metadata_file_path: str,
     sample_denominator: Optional[int] = 5,
 ) -> pd.DataFrame:
     """
     Function to load the Metrica tracking data from Sample Game 3 (in the FIFA EPTS format) using the Kloppy package
 
-    :param tracking_file_path: File path of a Metrica tracking data txt file
+    :param raw_tracking_data_file_path: File path of a Metrica tracking data txt file
     :param metadata_file_path: File path of a Metrica metadata xml file in the FIFA EPTS format
     :param sample_denominator: Optional parameter to create a sample rate for the tracking data frames to pass to the
         Kloppy `load_tracking_epts` function
@@ -81,7 +81,7 @@ def load_metrica_epts_tracking_with_kloppy(
 
     tracking_data = metrica.load_tracking_epts(
         meta_data=metadata_file_path,
-        raw_data=tracking_file_path,
+        raw_data=raw_tracking_data_file_path,
         # Optional arguments
         sample_rate=1 / sample_denominator,
         coordinates="metrica",
