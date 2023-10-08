@@ -25,7 +25,7 @@ def build_up_metric_component(
 
         phase_design_col, phase_outputs_col = st.columns(2)
         with phase_design_col:
-            st.write("Design a phase of play")
+            st.write("**Design a phase of play**")
             start_possession_bounds = st.select_slider(
                 label="Starting location area",
                 options=PossessionLocationOptions,
@@ -63,6 +63,7 @@ def build_up_metric_component(
             settled_possession_check = open_play_row.toggle(
                 label="Include open-play sequences",
                 key=f"settled_possession_check_{idx}",
+                value=True,
             )
 
             settled_possession_slider = open_play_row.slider(
@@ -70,7 +71,7 @@ def build_up_metric_component(
                 min_value=0.0,
                 max_value=10.0,
                 value=3.0 if settled_possession_check else 0.0,
-                step=0.25,
+                step=0.5,
                 key=f"settled_possession_slider_{idx}",
                 disabled=not settled_possession_check,
             )
@@ -86,8 +87,10 @@ def build_up_metric_component(
             )
 
         with phase_outputs_col:
-            st.write("Outputs for report")
-            st.write("'Avenue' features (e.g. wing play, long ball). Coming soon.")
+            st.write("**Outputs for report**")
+            st.write(
+                "'Avenue' features (e.g. wing play, long ball). Bit of a v1.1 concept."
+            )
 
             st.write("Outputs")
             output_options = [
@@ -97,7 +100,7 @@ def build_up_metric_component(
                 "contained_shot",
             ]
             output_option_checks = st.multiselect(
-                label="output options",
+                label="Output options",
                 options=output_options,
                 key=f"output_options_{idx}",
             )
