@@ -19,7 +19,16 @@ However, I ended up with more of my own code than I'd originally envisioned, par
 - Metrica's event data JSON was quite simple so writing my own basic parser wasn't too difficult.
 
 ## Processing/metric choices
-_To write_
+The prototype is based around a rough 'build-up' template. Options are still quite flexible within it, but it seemed like a recipe for menu configuration hell if you included all options for all possible metrics in the same place.
+
+In terms of these build-up metrics, there are options for:
+- Starting location/height of a possession sequence
+- Level of pressure at the start of a possession sequence* *(on the first carry event)
+- Basic phase of play options like including open-play or various set-play starting points, and a buffer from the time of an open-play turnover.
+
+It's likely that different metrics are going to share the same base, so there are two further sections, 'avenues' and 'outcomes'. Outcomes is everything that happens at (or towards) the end of a sequence - e.g. shot, ended in own half, reached final third. Avenues would be anything that happens in between, like consistent pressure being applied, long balls, wing play. Applying these avenues and outcomes to the base starting point saves time in metric creation and report generation.
+
+The aim of these features was to make the largest amount of football-intuitive metrics possible while remaining intuitive to users too.
 
 ## Output
 _To write_
